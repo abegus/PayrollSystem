@@ -1,0 +1,226 @@
+﻿<!--model ObjectOriented.Models.AspNetUsers-->
+@model ObjectOriented.ViewModels.ChangeModule
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Hire";
+}
+
+<h2>Hire</h2>
+
+
+@using (Html.BeginForm())
+{
+    <h4>Hire Form</h4>
+    <hr />
+    @Html.AntiForgeryToken()
+    <div class="col-md-4 table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Level</th>
+                    <th>Level Name</th>
+                    <th>Pay Range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Developer</td>
+                    <td>$60k - $90k</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Manager</td>
+                    <td>$80k - $120k</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Admin</td>
+                    <td>$100k - $300k</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-horizontal col-md-8">
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.curUser.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.curUser.Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curUser.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.Name, new { htmlAttributes = new { @class = "form-control" } })
+                <!--Html.ValidationMessageFor(model => model.curUser.Name, "", new { class = "text-danger" })-->
+                @{var results = ViewBag.Name;}
+                @{
+                    <span class="text-danger field-validation-error">@results</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curUser.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @{var email = ViewBag.Email;}
+                @{
+                    <span class="text-danger field-validation-error">@email</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.curUser.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.curUser.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curUser.PasswordHash, htmlAttributes: new { @class = "control-label col-md-2", @id = "pass" })
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.PasswordHash, new { htmlAttributes = new { @class = "form-control" } })
+                @{var password = ViewBag.Password;}
+                @{
+                    <span class="text-danger field-validation-error">@password</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Title</label> 
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.Position, new { htmlAttributes = new { @class = "form-control" } })
+                @{var position = ViewBag.Position;}
+                @{
+                    <span class="text-danger field-validation-error">@position</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            1 for Developer, 2 for Manager, 3 for Admin
+            <label class="control-label col-md-2">Position</label> 
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.Level, new { htmlAttributes = new { @class = "form-control" } })
+                @{var level = ViewBag.Level;}
+                @{
+                    <span class="text-danger field-validation-error">@level</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curUser.Salary, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.Salary, new { htmlAttributes = new { @class = "form-control" } })
+                @{var salary = ViewBag.Salary;}
+                @{
+                    <span class="text-danger field-validation-error">@salary</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curUser.StartDate, htmlAttributes: new { type = "date", @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.StartDate, new { htmlAttributes = new { type = "date", @class = "form-control" } })
+                @{var startDate = ViewBag.StartDate;}
+                @{
+                    <span class="text-danger field-validation-error">@startDate</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curUser.Witholdings, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.Witholdings, new { htmlAttributes = new { @class = "form-control" } })
+                @{var witholdings = ViewBag.Witholdings;}
+                @{
+                    <span class="text-danger field-validation-error">@witholdings</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curUser.BirthDate, htmlAttributes: new { type = "datetime-local", @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curUser.BirthDate, new { htmlAttributes = new { type = "date", @class = "form-control" } })
+                @{var birthDate = ViewBag.BirthDate;}
+                @{
+                    <span class="text-danger field-validation-error">@birthDate</span>
+                }
+            </div>
+        </div>
+
+        <!-- HERE IS FOR THE DEPARTMENT AND THE MANAGER PART -->
+        <div style="color: black;">
+            Only need a Department if Developer or Manager. Only need ManagerEmail if Developer
+        </div>
+
+        <div class="form-group" >
+            @Html.LabelFor(model => model.managerEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.managerEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @{var ManagerEmail = ViewBag.ManagerEmail;}
+                @{
+                    <span class="text-danger field-validation-error">@ManagerEmail</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none;">
+            @Html.LabelFor(model => model.departmentName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.departmentName, new { htmlAttributes = new { @class = "form-control" } })
+                @{var departmentName = ViewBag.DepartmentName;}
+                @{
+                    <span class="text-danger field-validation-error">@departmentName</span>
+                }
+            </div>
+        </div>
+
+        @for (var i = 0; i < Model.AllDeps.Count(); i++)
+        {
+            <div class="form-group">
+                @Html.Label("", Model.AllDeps.ToArray()[i].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => Model.AllDeps.ToArray()[i].Name)
+                    @Html.EditorFor(model => Model.whichDeps[i], new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        }
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Hire" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    $("#pass").text("Password");
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+}
+
+
+
+

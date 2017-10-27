@@ -1,0 +1,114 @@
+﻿@using Microsoft.AspNet.Identity
+@model ObjectOriented.ViewModels.ProjectModule
+@{
+    ViewBag.Title = "Create";
+}
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("#YourDropDownList").change(function()
+        {
+            $.get("/Controller/Action", $(this).val(), function(data)
+            {
+                $("#YourTextBox").val(data);
+            });
+        });
+    });
+</script>
+
+
+<h2>Create Project</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Project</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.Proj.ProjId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Proj.ProjId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Proj.ProjId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Proj.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Proj.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Proj.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Proj.OtherCosts, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Proj.OtherCosts, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Proj.OtherCosts, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.Proj.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Proj.Total, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Proj.Total, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Proj.StartDate, htmlAttributes: new { type = "date", @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Proj.StartDate, new { htmlAttributes = new { type = "date", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Proj.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Proj.EndDate, htmlAttributes: new { type = "date", @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Proj.EndDate, new { htmlAttributes = new { type = "date", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Proj.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       @for (var i = 0; i < Model.AllDeps.Count(); i++)
+       {
+        <div class="form-group">
+            @Html.Label("", Model.AllDeps.ToArray()[i].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => Model.AllDeps.ToArray()[i].Name)
+                @Html.EditorFor(model => Model.whichDeps[i], new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+       }
+
+        @foreach (var dep in Model.AllDeps)
+        {
+            //<div class="form-group">
+            //    @Html.Label("", dep.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            //    <div class="col-md-10">
+            //        @Html.HiddenFor(model => dep.Name)
+            //        @Html.EditorFor(model => dep.Name, new { htmlAttributes = new { @class = "form-control" } })
+            //   </div>
+            //</div>
+
+            // @Html.CheckBoxFor(model => dep.check, new { id = dep.DepId})
+            //<label for="@dep.DepId">@dep.Name</label>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

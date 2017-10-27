@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ObjectOriented.Models.Paystub>
+
+@{
+    ViewBag.Title = "Paystubs";
+}
+
+<h2>Recently Viewed Paystubs</h2>
+
+<p>
+    @Html.ActionLink("New Paystub", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </th>
+        <th>
+            Month
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NetPay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Witholdings)
+        </th>
+        <th>
+            Manager
+        </th>
+        <th>
+            Department
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NetPay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Witholdings)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartmentName)
+        </td>
+        <td>
+            <!--Html.ActionLink("Edit", "Edit", new { id=item.StubId }) |-->
+            @Html.ActionLink("View", "Details", new { id=item.StubId }) |
+            @Html.ActionLink("Remove", "Delete", new { id=item.StubId })
+        </td>
+    </tr>
+}
+
+</table>

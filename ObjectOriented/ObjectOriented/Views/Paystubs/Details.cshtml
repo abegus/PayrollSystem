@@ -1,0 +1,81 @@
+﻿@model ObjectOriented.Models.Paystub
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Paystub</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NetPay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NetPay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Witholdings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Witholdings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

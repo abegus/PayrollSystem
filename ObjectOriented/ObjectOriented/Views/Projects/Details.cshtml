@@ -1,0 +1,155 @@
+﻿@model ObjectOriented.ViewModels.ProjectModule
+
+@{
+    ViewBag.Title = "Report";
+}
+
+<!--<h2>Details</h2>-->
+
+<div>
+    <h2>@Model.Proj.Name Reports</h2>
+    <h3>Select a month to generate a report for.</h3>
+    <hr />
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    
+</div>
+<!--<hr />-->
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group" style="display:none">
+        @Html.LabelFor(model => model.Proj.ProjId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Proj.ProjId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Proj.ProjId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div style="display:none">
+        @Html.EditorFor(model => model.Proj.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.Proj.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.Proj.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.Proj.OtherCosts, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-horizontal col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Month, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Month, new { htmlAttributes = new { type = "month", @class = "form-control" } })
+                @{var month = ViewBag.Month;}
+                @{
+                    <span class="text-danger field-validation-error">@month</span>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <hr />
+                    }
+
+
+@if (Model.DepsArray != null)
+{
+<div class="row">
+    <h2>@Model.Proj.Name Report for @Model.Month</h2>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Proj.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proj.Name)
+        </dd>
+
+        <dt>
+            Number Departments
+        </dt>
+
+        <dd>
+            @Model.DepsArray.Length
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proj.OtherCosts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proj.OtherCosts)
+        </dd>
+
+        <dt>
+            Wage Costs
+        </dt>
+
+        <dd >
+            @Math.Round((Model.Proj.Total - Model.Proj.OtherCosts),2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proj.Total)
+        </dt>
+
+        <dd >
+            @Html.DisplayFor(model => model.Proj.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proj.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proj.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proj.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proj.EndDate)
+        </dd>
+
+    </dl>
+    <hr>
+    @for (int i = 0; i < Model.DepsArray.Length; i++)
+    {
+        <br />
+        <div class="col-md-offset-1 col-md-11">
+            <h3>@Model.DepsArray[i].Name</h3>
+            <dl class="dl-horizontal">
+                <dt>
+                    Total cost for @Model.DepsArray[i].Name
+                </dt>
+
+                <dd>
+                    @Model.DepCosts[i]
+                </dd>
+            </dl>
+            <br />
+            <h4>Employee Salary in @Model.DepsArray[i].Name</h4>
+                 
+                <dl class="dl-horizontal">
+                    @for (int j = 0; j < Model.UsersArray[i].Length; j++)
+                    {
+                        <dt>
+                            @Model.UsersArray[i][j].Name
+                        </dt>
+
+                        <dd>
+                            @Math.Round((Model.UsersArray[i][j].Salary / 12) * (Model.UsersPercentage[i][j] / 100), 2 )
+                        </dd>
+                    }
+                </dl>
+
+            <hr />
+        </div>
+        <hr >
+    }
+</div>
+}

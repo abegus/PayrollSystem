@@ -1,0 +1,127 @@
+﻿@using Microsoft.AspNet.Identity
+@model ObjectOriented.ViewModels.ProjectModule
+@using ObjectOriented.Models;
+@{
+    ViewBag.Title = "Adjust";
+}
+
+<h2>Adjust "@Model.Proj.Name" Percentages</h2>
+
+@using (Html.BeginForm())
+{
+    PayrollDbConnection db = new PayrollDbConnection();
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Adjust Project Workload Percentages</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Proj.ProjId)
+
+        @{var results = ViewBag.Percentage;}
+        @{
+            <span class="text-danger field-validation-error">*@results</span>
+        }
+        
+        <div class="col-md-12">
+           @if (Model.UTP != null && Model.UTP.Count() > 0)
+           {
+               <h3>All people involved such that this is their only project</h3>
+
+            foreach (var u in Model.UTP)
+            {
+                <span>
+                    @u.AspNetUser.Name,
+                </span>
+            }
+           }
+        </div>
+        <br />
+
+
+        <h3>All Users Involved (With more than 1 project)</h3>
+        <table class="table">
+            <tr>
+                <th>
+                    Employee
+                </th>
+                <th>
+                    This Project %
+                </th>
+                <th>
+                    Other Projects %
+                </th>
+            </tr>
+           
+            @for(int i = 0; i < Model.UTPS.Length; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.UTPS[i].AspNetUser.Name)
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <h6>@Model.UTPS[i].Project.Name</h6>
+                                @Html.EditorFor(model => Model.UTPS[i].Percentage, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => Model.UTPS[i].Percentage, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10" style="display:none">
+                                @Html.EditorFor(model => Model.UTPS[i].ProjId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => Model.UTPS[i].ProjId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10" style="display:none">
+                                @Html.EditorFor(model => Model.UTPS[i].UserId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => Model.UTPS[i].UserId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @for (int j = 0; j < Model.NestedUtps[i].Length; j++)
+                        {
+                            <div class="form-group">
+                                <div style="display:none">
+                                    @Html.EditorFor(model => Model.NestedUtps[i][j].Project.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => Model.NestedUtps[i][j].Project.Name, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-10">
+                                    <h6>@Model.NestedUtps[i][j].Project.Name</h6>
+                                    @Html.EditorFor(model => Model.NestedUtps[i][j].Percentage, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => Model.NestedUtps[i][j].Percentage, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none">
+                                @Html.LabelFor(model => Model.NestedUtps[i][j].ProjId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => Model.NestedUtps[i][j].ProjId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => Model.NestedUtps[i][j].ProjId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none">
+                                @Html.LabelFor(model => Model.NestedUtps[i][j].UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => Model.NestedUtps[i][j].UserId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => Model.NestedUtps[i][j].UserId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+
+
+       
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

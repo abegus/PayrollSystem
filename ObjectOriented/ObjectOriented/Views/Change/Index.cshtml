@@ -1,0 +1,96 @@
+﻿<!--model IEnumerable<ObjectOriented.Models.AspNetUsers>-->
+@model ObjectOriented.ViewModels.ChangeModule
+@using Microsoft.AspNet.Identity
+@using ObjectOriented.Models
+
+@{
+    ViewBag.Title = "Users";
+    PayrollDbConnection db = new PayrollDbConnection();
+}
+
+<h2>Users</h2>
+
+<p>
+    @Html.ActionLink("Hire", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Position
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            Manager
+        </th>
+        <th>
+            Salary
+        </th>
+        <th>
+           StartDate
+        </th>
+        <th>
+            EndDate
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Users)
+    {
+        string Dep = null;
+        string man = null;
+        if (db.Works.Any(o => o.UserId == item.Id))
+        {
+            Dep = (from x in db.Works where x.UserId == item.Id select x.Department.Name).First().ToString();
+        }
+        if (db.Mngs.Any(o => o.EmpId == item.Id))
+        {
+            man = (from x in db.Mngs where x.EmpId == item.Id select x.AspNetUser1.Name).First().ToString();
+        }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level)
+            </td>
+            <td>
+                @Dep
+            </td>
+            <td>
+                @man
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.ActionLink("Promote", "Edit", new { id = item.Id }) |
+                <!--Html.ActionLink("Details", "Details", new { id = item.Id }) -->
+                @Html.ActionLink("Fire", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

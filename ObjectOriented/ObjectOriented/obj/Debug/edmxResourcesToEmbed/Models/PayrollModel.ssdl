@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ObjectOrientedDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__RefactorLog">
+    <Key>
+      <PropertyRef Name="OperationKey" />
+    </Key>
+    <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepId" />
+    </Key>
+    <Property Name="DepId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Manages">
+    <Key>
+      <PropertyRef Name="Mid" />
+      <PropertyRef Name="EmpId" />
+    </Key>
+    <Property Name="Mid" Type="int" Nullable="false" />
+    <Property Name="EmpId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Paystub">
+    <Key>
+      <PropertyRef Name="StubId" />
+    </Key>
+    <Property Name="StubId" Type="int" Nullable="false" />
+    <Property Name="Pay" Type="money" Nullable="false" />
+    <Property Name="Witholdings" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Witholdings" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Salary" Type="money" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Works">
+    <Key>
+      <PropertyRef Name="DepId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="DepId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="IsManager" Type="int" />
+    <Property Name="IsEmployee" Type="int" />
+  </EntityType>
+  <Association Name="FK_Manages_ToEmployee">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Manages" Type="Self.Manages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Manages">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manages_ToManager">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Manages" Type="Self.Manages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Manages">
+        <PropertyRef Name="Mid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Paystub_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Paystub" Type="Self.Paystub" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Paystub">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Works_ToDepartment">
+    <End Role="Department" Type="Self.Department" Multiplicity="1" />
+    <End Role="Works" Type="Self.Works" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepId" />
+      </Principal>
+      <Dependent Role="Works">
+        <PropertyRef Name="DepId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Works_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Works" Type="Self.Works" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Works">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ObjectOrientedDatabaseModelStoreContainer">
+    <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Manages" EntityType="Self.Manages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Paystub" EntityType="Self.Paystub" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Works" EntityType="Self.Works" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Manages_ToEmployee" Association="Self.FK_Manages_ToEmployee">
+      <End Role="User" EntitySet="User" />
+      <End Role="Manages" EntitySet="Manages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manages_ToManager" Association="Self.FK_Manages_ToManager">
+      <End Role="User" EntitySet="User" />
+      <End Role="Manages" EntitySet="Manages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Paystub_ToUser" Association="Self.FK_Paystub_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Paystub" EntitySet="Paystub" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Works_ToDepartment" Association="Self.FK_Works_ToDepartment">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="Works" EntitySet="Works" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Works_ToUser" Association="Self.FK_Works_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Works" EntitySet="Works" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

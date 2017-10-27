@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ObjectOrientedDatabaseModelStoreContainer" CdmEntityContainer="ObjectOrientedDatabaseEntities">
+    <EntitySetMapping Name="C__RefactorLog">
+      <EntityTypeMapping TypeName="ObjectOrientedDatabaseModel.C__RefactorLog">
+        <MappingFragment StoreEntitySet="__RefactorLog">
+          <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="ObjectOrientedDatabaseModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="DepId" ColumnName="DepId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Paystubs">
+      <EntityTypeMapping TypeName="ObjectOrientedDatabaseModel.Paystub">
+        <MappingFragment StoreEntitySet="Paystub">
+          <ScalarProperty Name="StubId" ColumnName="StubId" />
+          <ScalarProperty Name="Pay" ColumnName="Pay" />
+          <ScalarProperty Name="Witholdings" ColumnName="Witholdings" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ObjectOrientedDatabaseModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Witholdings" ColumnName="Witholdings" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Works">
+      <EntityTypeMapping TypeName="ObjectOrientedDatabaseModel.Work">
+        <MappingFragment StoreEntitySet="Works">
+          <ScalarProperty Name="DepId" ColumnName="DepId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsManager" ColumnName="IsManager" />
+          <ScalarProperty Name="IsEmployee" ColumnName="IsEmployee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Manages" TypeName="ObjectOrientedDatabaseModel.Manages" StoreEntitySet="Manages">
+      <EndProperty Name="User">
+        <ScalarProperty Name="UserId" ColumnName="EmpId" />
+      </EndProperty>
+      <EndProperty Name="User1">
+        <ScalarProperty Name="UserId" ColumnName="Mid" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
